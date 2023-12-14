@@ -15,11 +15,17 @@ class PlutoBaseRow extends StatelessWidget {
 
   final bool visibilityLayout;
 
+  final bool isLastRow;
+
+  final BorderRadiusGeometry borderRadius;
+
   const PlutoBaseRow({
     required this.rowIdx,
     required this.row,
     required this.columns,
     required this.stateManager,
+    required this.isLastRow,
+    required this.borderRadius,
     this.visibilityLayout = false,
     super.key,
   });
@@ -316,6 +322,9 @@ class _RowContainerWidgetState extends PlutoStateWithChange<_RowContainerWidget>
 
     return BoxDecoration(
       color: rowColor,
+      borderRadius: const BorderRadius.only(
+        bottomRight: Radius.circular(16),
+      ),
       border: Border(
         top: isTopDragTarget
             ? BorderSide(

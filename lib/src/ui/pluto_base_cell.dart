@@ -278,8 +278,13 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
     } else {
       return BoxDecoration(
         color: isGroupedRowCell ? cellColorGroupedRow : null,
+        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(16)),
         border: enableCellVerticalBorder
             ? BorderDirectional(
+                start: BorderSide(
+                  color: borderColor,
+                  width: 1.0,
+                ),
                 end: BorderSide(
                   color: borderColor,
                   width: 1.0,

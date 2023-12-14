@@ -108,8 +108,10 @@ class PlutoBodyRowsState extends PlutoStateWithChange<PlutoBodyRows> {
                 key: ValueKey('body_row_${_rows[i].key}'),
                 rowIdx: i,
                 row: _rows[i],
+                isLastRow: i == _rows.length - 1,
                 columns: _columns,
                 stateManager: stateManager,
+                borderRadius: 16,
                 visibilityLayout: true,
               );
             },

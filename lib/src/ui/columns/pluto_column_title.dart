@@ -383,11 +383,7 @@ class _ColumnWidget extends StatelessWidget {
               color: noDragTarget
                   ? column.backgroundColor
                   : style.dragTargetColumnColor,
-              border: BorderDirectional(
-                end: style.enableColumnBorderVertical
-                    ? BorderSide(color: style.borderColor, width: 1.0)
-                    : BorderSide.none,
-              ),
+              border: Border.all(color: style.borderColor, width: 1),
             ),
             child: Padding(
               padding: padding,

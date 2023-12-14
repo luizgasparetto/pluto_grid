@@ -126,12 +126,6 @@ List<PopupMenuEntry<PlutoGridColumnMenuItem>> _getDefaultColumnMenuItems({
         text: localeText.freezeColumnToStart,
         textColor: enoughFrozenColumnsWidth ? textColor : disableTextColor,
       ),
-      _buildMenuItem(
-        value: PlutoGridColumnMenuItem.freezeToEnd,
-        enabled: enoughFrozenColumnsWidth,
-        text: localeText.freezeColumnToEnd,
-        textColor: enoughFrozenColumnsWidth ? textColor : disableTextColor,
-      ),
     ],
     const PopupMenuDivider(),
     _buildMenuItem(

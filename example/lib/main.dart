@@ -36,16 +36,28 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
       title: 'Id',
       field: 'id',
       type: PlutoColumnType.text(),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
       title: 'Name',
       field: 'name',
       type: PlutoColumnType.text(),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
       title: 'Age',
       field: 'age',
       type: PlutoColumnType.number(),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
       title: 'Role',
@@ -55,40 +67,37 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
         'Designer',
         'Owner',
       ]),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
       title: 'Joined',
       field: 'joined',
       type: PlutoColumnType.date(),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
       title: 'Working time',
       field: 'working_time',
       type: PlutoColumnType.time(),
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
     PlutoColumn(
-      title: 'salary',
+      title: 'Salary',
       field: 'salary',
       type: PlutoColumnType.currency(),
-      footerRenderer: (rendererContext) {
-        return PlutoAggregateColumnFooter(
-          rendererContext: rendererContext,
-          formatAsCurrency: true,
-          type: PlutoAggregateColumnType.sum,
-          format: '#,###',
-          alignment: Alignment.center,
-          titleSpanBuilder: (text) {
-            return [
-              const TextSpan(
-                text: 'Sum',
-                style: TextStyle(color: Colors.red),
-              ),
-              const TextSpan(text: ' : '),
-              TextSpan(text: text),
-            ];
-          },
-        );
-      },
+      enableColumnDrag: false,
+      enableHideColumnMenuItem: false,
+      enableSorting: false,
+      enableFilterMenuItem: false,
     ),
   ];
 
@@ -128,16 +137,6 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
     ),
   ];
 
-  /// columnGroups that can group columns can be omitted.
-  final List<PlutoColumnGroup> columnGroups = [
-    PlutoColumnGroup(title: 'Id', fields: ['id'], expandedColumn: true),
-    PlutoColumnGroup(title: 'User information', fields: ['name', 'age']),
-    PlutoColumnGroup(title: 'Status', children: [
-      PlutoColumnGroup(title: 'A', fields: ['role'], expandedColumn: true),
-      PlutoColumnGroup(title: 'Etc.', fields: ['joined', 'working_time']),
-    ]),
-  ];
-
   /// [PlutoGridStateManager] has many methods and properties to dynamically manipulate the grid.
   /// You can manipulate the grid dynamically at runtime by passing this through the [onLoaded] callback.
   late final PlutoGridStateManager stateManager;
@@ -146,19 +145,25 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        height: 214,
         padding: const EdgeInsets.all(15),
         child: PlutoGrid(
           columns: columns,
           rows: rows,
-          columnGroups: columnGroups,
+          // columnGroups: columnGroups,
           onLoaded: (PlutoGridOnLoadedEvent event) {
             stateManager = event.stateManager;
-            stateManager.setShowColumnFilter(true);
+            //stateManager.setShowColumnFilter(true);
           },
           onChanged: (PlutoGridOnChangedEvent event) {
             print(event);
           },
-          configuration: const PlutoGridConfiguration(),
+          configuration: const PlutoGridConfiguration(
+            scrollbar: PlutoGridScrollbarConfig(
+              isAlwaysShown: false,
+            ),
+            style: PlutoGridStyleConfig(),
+          ),
         ),
       ),
     );

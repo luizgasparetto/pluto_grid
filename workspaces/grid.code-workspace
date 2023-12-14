@@ -1,0 +1,25 @@
+{
+  "folders": [
+    {
+      "name": "pluto_grid",
+      "path": "../lib"
+    },
+    {
+      "name": "example",
+      "path": "../example"
+    }
+  ],
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Example (DEBUG)",
+        "type": "dart",
+        "request": "launch",
+        "flutterMode": "debug",
+        "cwd": "${workspaceFolder:example}",
+        "program": "../example/lib/main.dart"
+      }
+    ],
+  },
+}

@@ -64,10 +64,10 @@ abstract class PlutoColumnType {
   factory PlutoColumnType.currency({
     dynamic defaultValue = 0,
     bool negative = true,
-    String? format,
+    String format = 'R\$ ',
     bool applyFormatOnInit = true,
     bool allowFirstDot = false,
-    String? locale,
+    String locale = 'pt_BR',
     String? name,
     String? symbol,
     int? decimalDigits,
@@ -124,8 +124,8 @@ abstract class PlutoColumnType {
     dynamic defaultValue = '',
     DateTime? startDate,
     DateTime? endDate,
-    String format = 'yyyy-MM-dd',
-    String headerFormat = 'yyyy-MM',
+    String format = 'dd/MM/yyyy',
+    String headerFormat = 'MM-yyyy',
     bool applyFormatOnInit = true,
     IconData? popupIcon = Icons.date_range,
   }) {
