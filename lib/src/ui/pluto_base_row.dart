@@ -17,7 +17,11 @@ class PlutoBaseRow extends StatelessWidget {
 
   final bool isLastRow;
 
-  final BorderRadiusGeometry borderRadius;
+  final double borderRadius;
+
+  final bool hasFreezedColumns;
+
+  final bool isFreezed;
 
   const PlutoBaseRow({
     required this.rowIdx,
@@ -27,6 +31,8 @@ class PlutoBaseRow extends StatelessWidget {
     required this.isLastRow,
     required this.borderRadius,
     this.visibilityLayout = false,
+    this.hasFreezedColumns = false,
+    required this.isFreezed,
     super.key,
   });
 
@@ -68,7 +74,11 @@ class PlutoBaseRow extends StatelessWidget {
     );
   }
 
-  PlutoVisibilityLayoutId _makeCell(PlutoColumn column) {
+  PlutoVisibilityLayoutId _makeCell(
+    PlutoColumn column,
+    int columnIdx,
+    int columnsLength,
+  ) {
     return PlutoVisibilityLayoutId(
       id: column.field,
       child: PlutoBaseCell(
@@ -78,6 +88,9 @@ class PlutoBaseRow extends StatelessWidget {
         rowIdx: rowIdx,
         row: row,
         stateManager: stateManager,
+        borderRadius: borderRadius,
+        isFirstCell: !hasFreezedColumns && columnIdx == 0 && isLastRow,
+        isLastCell: !isFreezed && (columnIdx == columnsLength - 1 && isLastRow),
       ),
     );
   }
@@ -87,6 +100,10 @@ class PlutoBaseRow extends StatelessWidget {
       stateManager: stateManager,
       rowIdx: rowIdx,
       row: row,
+      isLastRow: isLastRow,
+      borderRadius: borderRadius,
+      hasFreezedColumns: hasFreezedColumns,
+      isFreezed: isFreezed,
       enableRowColorAnimation:
           stateManager.configuration.style.enableRowColorAnimation,
       key: ValueKey('rowContainer_${row.key}'),
@@ -100,7 +117,15 @@ class PlutoBaseRow extends StatelessWidget {
               ),
               scrollController: stateManager.scroll.bodyRowsHorizontal!,
               initialViewportDimension: MediaQuery.of(dragContext).size.width,
-              children: columns.map(_makeCell).toList(growable: false),
+              children: columns
+                  .map(
+                    (e) => _makeCell(
+                      e,
+                      columns.indexOf(e),
+                      columns.length,
+                    ),
+                  )
+                  .toList(growable: false),
             )
           : CustomMultiChildLayout(
               key: ValueKey('rowContainer_${row.key}_row'),
@@ -109,7 +134,15 @@ class PlutoBaseRow extends StatelessWidget {
                 columns: columns,
                 textDirection: stateManager.textDirection,
               ),
-              children: columns.map(_makeCell).toList(growable: false),
+              children: columns
+                  .map(
+                    (e) => _makeCell(
+                      e,
+                      columns.indexOf(e),
+                      columns.length,
+                    ),
+                  )
+                  .toList(growable: false),
             ),
     );
   }
@@ -190,6 +223,14 @@ class _RowContainerWidget extends PlutoStatefulWidget {
 
   final bool enableRowColorAnimation;
 
+  final double borderRadius;
+
+  final bool isLastRow;
+
+  final bool hasFreezedColumns;
+
+  final bool isFreezed;
+
   final Widget child;
 
   const _RowContainerWidget({
@@ -198,6 +239,10 @@ class _RowContainerWidget extends PlutoStatefulWidget {
     required this.row,
     required this.enableRowColorAnimation,
     required this.child,
+    required this.borderRadius,
+    required this.isLastRow,
+    required this.hasFreezedColumns,
+    required this.isFreezed,
     Key? key,
   }) : super(key: key);
 
@@ -322,9 +367,16 @@ class _RowContainerWidgetState extends PlutoStateWithChange<_RowContainerWidget>
 
     return BoxDecoration(
       color: rowColor,
-      borderRadius: const BorderRadius.only(
-        bottomRight: Radius.circular(16),
-      ),
+      borderRadius: widget.isLastRow
+          ? BorderRadius.only(
+              bottomLeft: Radius.circular(
+                !widget.hasFreezedColumns ? widget.borderRadius : 0,
+              ),
+              bottomRight: Radius.circular(
+                !widget.isFreezed ? widget.borderRadius : 0,
+              ),
+            )
+          : BorderRadius.zero,
       border: Border(
         top: isTopDragTarget
             ? BorderSide(

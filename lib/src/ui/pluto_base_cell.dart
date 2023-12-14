@@ -15,6 +15,12 @@ class PlutoBaseCell extends StatelessWidget
 
   final PlutoGridStateManager stateManager;
 
+  final double borderRadius;
+
+  final bool isFirstCell;
+
+  final bool isLastCell;
+
   const PlutoBaseCell({
     Key? key,
     required this.cell,
@@ -22,6 +28,9 @@ class PlutoBaseCell extends StatelessWidget
     required this.rowIdx,
     required this.row,
     required this.stateManager,
+    required this.borderRadius,
+    required this.isFirstCell,
+    required this.isLastCell,
   }) : super(key: key);
 
   @override
@@ -123,6 +132,9 @@ class PlutoBaseCell extends StatelessWidget
         cellPadding: column.cellPadding ??
             stateManager.configuration.style.defaultCellPadding,
         stateManager: stateManager,
+        borderRadius: borderRadius,
+        isFirstCell: isFirstCell,
+        isLastCell: isLastCell,
         child: _Cell(
           stateManager: stateManager,
           rowIdx: rowIdx,
@@ -148,6 +160,12 @@ class _CellContainer extends PlutoStatefulWidget {
 
   final PlutoGridStateManager stateManager;
 
+  final double borderRadius;
+
+  final bool isFirstCell;
+
+  final bool isLastCell;
+
   final Widget child;
 
   const _CellContainer({
@@ -157,6 +175,9 @@ class _CellContainer extends PlutoStatefulWidget {
     required this.column,
     required this.cellPadding,
     required this.stateManager,
+    required this.borderRadius,
+    required this.isLastCell,
+    required this.isFirstCell,
     required this.child,
   });
 
@@ -207,6 +228,14 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
         cellColorInReadOnlyState: style.cellColorInReadOnlyState,
         cellColorGroupedRow: style.cellColorGroupedRow,
         selectingMode: stateManager.selectingMode,
+        borderRadius: BorderRadius.only(
+          bottomLeft: widget.isFirstCell
+              ? Radius.circular(widget.borderRadius)
+              : const Radius.circular(1),
+          bottomRight: widget.isLastCell
+              ? Radius.circular(widget.borderRadius)
+              : const Radius.circular(1),
+        ),
       ),
     );
   }
@@ -249,6 +278,7 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
     required Color cellColorInReadOnlyState,
     required Color? cellColorGroupedRow,
     required PlutoGridSelectingMode selectingMode,
+    required BorderRadius borderRadius,
   }) {
     if (isCurrentCell) {
       return BoxDecoration(
@@ -262,6 +292,7 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
           cellColorInEditState: cellColorInEditState,
           selectingMode: selectingMode,
         ),
+        borderRadius: borderRadius,
         border: Border.all(
           color: hasFocus ? activatedBorderColor : inactivatedBorderColor,
           width: 1,
@@ -270,6 +301,7 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
     } else if (isSelectedCell) {
       return BoxDecoration(
         color: activatedColor,
+        borderRadius: borderRadius,
         border: Border.all(
           color: hasFocus ? activatedBorderColor : inactivatedBorderColor,
           width: 1,
@@ -278,7 +310,7 @@ class _CellContainerState extends PlutoStateWithChange<_CellContainer> {
     } else {
       return BoxDecoration(
         color: isGroupedRowCell ? cellColorGroupedRow : null,
-        borderRadius: const BorderRadius.only(bottomRight: Radius.circular(16)),
+        borderRadius: borderRadius,
         border: enableCellVerticalBorder
             ? BorderDirectional(
                 start: BorderSide(

@@ -157,12 +157,16 @@ class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
           },
           onChanged: (PlutoGridOnChangedEvent event) {
             print(event);
+
+            print(event);
           },
           configuration: const PlutoGridConfiguration(
             scrollbar: PlutoGridScrollbarConfig(
               isAlwaysShown: false,
             ),
-            style: PlutoGridStyleConfig(),
+            style: PlutoGridStyleConfig(
+              borderRadius: 16,
+            ),
           ),
         ),
       ),

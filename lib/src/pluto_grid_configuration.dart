@@ -245,6 +245,7 @@ class PlutoGridStyleConfig {
     this.rowGroupEmptyIcon = Icons.noise_control_off,
     this.gridBorderRadius = BorderRadius.zero,
     this.gridPopupBorderRadius = BorderRadius.zero,
+    this.borderRadius = 16,
   });
 
   const PlutoGridStyleConfig.dark({
@@ -301,6 +302,7 @@ class PlutoGridStyleConfig {
     this.rowGroupEmptyIcon = Icons.noise_control_off,
     this.gridBorderRadius = BorderRadius.zero,
     this.gridPopupBorderRadius = BorderRadius.zero,
+    this.borderRadius = 16,
   });
 
   /// Enable borderShadow in [PlutoGrid].
@@ -447,6 +449,9 @@ class PlutoGridStyleConfig {
 
   /// Apply border radius to popup opened inside [PlutoGrid].
   final BorderRadiusGeometry gridPopupBorderRadius;
+
+  /// Apply base circular border radius.
+  final double borderRadius;
 
   PlutoGridStyleConfig copyWith({
     bool? enableGridBorderShadow,

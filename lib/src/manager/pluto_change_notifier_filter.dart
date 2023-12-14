@@ -167,8 +167,6 @@ class PlutoNotifierFilterResolverDefault
         return defaultColumnsFilter(stateManager);
       case PlutoBodyRows:
       case PlutoLeftFrozenRows:
-      case PlutoRightFrozenRows:
-        return defaultRowsFilter(stateManager);
       case PlutoNoRowsWidget:
         return {
           ...defaultRowsFilter(stateManager),

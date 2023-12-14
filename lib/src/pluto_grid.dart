@@ -634,7 +634,12 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
                 /// Body columns and rows.
                 LayoutId(
                   id: _StackName.bodyRows,
-                  child: PlutoBodyRows(_stateManager),
+                  child: PlutoBodyRows(
+                    _stateManager,
+                    styleConfig: widget.configuration.style,
+                    hasFreezedColumns:
+                        stateManager.leftFrozenColumns.isNotEmpty,
+                  ),
                 ),
                 LayoutId(
                   id: _StackName.bodyColumns,
@@ -658,7 +663,7 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
                     id: _StackName.leftFrozenRows,
                     child: PlutoLeftFrozenRows(
                       _stateManager,
-                      borderRadius: widget.configuration.style.gridBorderRadius,
+                      styleConfig: widget.configuration.style,
                     ),
                   ),
                   LayoutId(
@@ -675,32 +680,6 @@ class PlutoGridState extends PlutoStateWithChange<PlutoGrid> {
                       child: PlutoLeftFrozenColumnsFooter(stateManager),
                     ),
                 ],
-
-                // /// Right columns and rows.
-                // if (showRightFrozen) ...[
-                //   LayoutId(
-                //     id: _StackName.rightFrozenColumns,
-                //     child: PlutoRightFrozenColumns(_stateManager),
-                //   ),
-                //   LayoutId(
-                //     id: _StackName.rightFrozenRows,
-                //     child: PlutoRightFrozenRows(_stateManager),
-                //   ),
-                //   LayoutId(
-                //     id: _StackName.rightFrozenDivider,
-                //     child: PlutoShadowLine(
-                //       axis: Axis.vertical,
-                //       color: style.gridBorderColor,
-                //       shadow: style.enableGridBorderShadow,
-                //       reverse: true,
-                //     ),
-                //   ),
-                //   if (showColumnFooter)
-                //     LayoutId(
-                //       id: _StackName.rightFrozenColumnFooters,
-                //       child: PlutoRightFrozenColumnsFooter(stateManager),
-                //     ),
-                // ],
 
                 /// Header and divider.
                 if (showColumnRowDivider && _stateManager.showHeader) ...[

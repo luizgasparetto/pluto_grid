@@ -5,12 +5,12 @@ import 'ui.dart';
 
 class PlutoLeftFrozenRows extends PlutoStatefulWidget {
   final PlutoGridStateManager stateManager;
-  final BorderRadiusGeometry borderRadius;
+  final PlutoGridStyleConfig styleConfig;
 
   const PlutoLeftFrozenRows(
     this.stateManager, {
     super.key,
-    required this.borderRadius,
+    required this.styleConfig,
   });
 
   @override
@@ -66,10 +66,11 @@ class PlutoLeftFrozenRowsState
           key: ValueKey('left_frozen_row_${_rows[i].key}'),
           rowIdx: i,
           row: _rows[i],
-          isLastRow: i == 0,
-          borderRadius: widget.borderRadius,
+          isLastRow: i == _rows.length - 1,
+          borderRadius: widget.styleConfig.borderRadius,
           columns: _columns,
           stateManager: stateManager,
+          isFreezed: true,
         );
       },
     );

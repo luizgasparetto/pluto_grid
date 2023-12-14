@@ -6,10 +6,14 @@ import 'ui.dart';
 
 class PlutoBodyRows extends PlutoStatefulWidget {
   final PlutoGridStateManager stateManager;
+  final PlutoGridStyleConfig styleConfig;
+  final bool hasFreezedColumns;
 
   const PlutoBodyRows(
     this.stateManager, {
     super.key,
+    required this.styleConfig,
+    required this.hasFreezedColumns,
   });
 
   @override
@@ -111,8 +115,10 @@ class PlutoBodyRowsState extends PlutoStateWithChange<PlutoBodyRows> {
                 isLastRow: i == _rows.length - 1,
                 columns: _columns,
                 stateManager: stateManager,
-                borderRadius: 16,
+                borderRadius: widget.styleConfig.borderRadius,
+                hasFreezedColumns: widget.hasFreezedColumns,
                 visibilityLayout: true,
+                isFreezed: false,
               );
             },
           ),
